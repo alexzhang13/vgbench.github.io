@@ -1,0 +1,230 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+  background-color: #fef9ed;  /* Soft vintage yellow background */
+  font-size: 1.1rem;  /* Increased base font size */
+}
+
+
+.footer .icon-link {
+    font-size: 25px;
+    color: #000;
+}
+
+.link-block a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+  font-weight: bold;
+  color: #1a1a7c;
+}
+
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+
+.publication-title {
+}
+
+.publication-banner {
+  max-height: parent;
+
+}
+
+.publication-banner video {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  object-fit: fit;
+}
+
+.publication-header .hero-body {
+}
+
+.publication-title {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+    color: #664229;  /* Darker brown for better contrast on yellow background */
+    width: fit-content;
+    font-weight: bold;
+}
+
+.publication-awards {
+    color: #ff3860;
+    width: fit-content;
+    font-weight: bolder;
+}
+
+.publication-authors {
+}
+
+.publication-authors a {
+   color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+    text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-banner img {
+}
+
+.publication-authors {
+  /*color: #4286f4;*/
+}
+
+.publication-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.publication-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.publication-body img {
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0;
+  font-size: 0;
+}
+
+.results-carousel video {
+  margin: 0;
+}
+
+
+.interpolation-panel {
+  background: #f5e6d3;  /* Lighter warm tone for panels */
+  border-radius: 10px;
+}
+
+.interpolation-panel .interpolation-image {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.interpolation-video-column {
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+#interpolation-image-wrapper {
+  width: 100%;
+}
+#interpolation-image-wrapper img {
+  border-radius: 5px;
+}
+
+/* Game tags styling */
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  margin: 0 2px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: 500;
+  color: white !important;  /* Added !important to override any conflicting styles */
+}
+
+.tag.tag-2d {
+  background-color: #3498db !important;  /* Blue */
+}
+
+.tag.tag-3d {
+  background-color: #9b59b6 !important;  /* Purple */
+}
+
+.tag.tag-shooter {
+  background-color: #e74c3c !important;  /* Red */
+}
+
+.tag.tag-strategy {
+  background-color: #2ecc71 !important;  /* Green */
+}
+
+.tag.tag-turn-based {
+  background-color: #f1c40f !important;  /* Yellow */
+  color: #2c3e50 !important;  /* Darker text for better contrast */
+}
+
+.tag.tag-puzzle {
+  background-color: #1abc9c !important;  /* Turquoise */
+}
+
+.tag.tag-platformer {
+  background-color: #e67e22 !important;  /* Orange */
+}
+
+.tag.tag-racer {
+  background-color: #c0392b !important;  /* Dark Red */
+}
+
+.tag.tag-grid-world {
+  background-color: #16a085 !important;  /* Dark Turquoise */
+}
+
+.tag.tag-open-world {
+  background-color: #27ae60 !important;  /* Dark Green */
+}
+
+.tag.tag-detective {
+  background-color: #8e44ad !important;  /* Dark Purple */
+}
+
+.tag.tag-2-5d {
+  background-color: #6C5CE7 !important;  /* A blue-purple blend */
+}
+
+/* Add some spacing to the list items */
+ol li {
+  margin-bottom: 8px;
+}
+
+.container.is-max-desktop {
+  max-width: 850px !important;  /* Tighter max-width for better readability */
+}
