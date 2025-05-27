@@ -2,6 +2,19 @@
 Hosted at [vgbench.com](https://www.vgbench.com)
 
 # Citation
+Citing our paper:
+```
+@misc{zhang2025videogamebenchvisionlanguagemodelscomplete,
+      title={VideoGameBench: Can Vision-Language Models complete popular video games?}, 
+      author={Alex L. Zhang and Thomas L. Griffiths and Karthik R. Narasimhan and Ofir Press},
+      year={2025},
+      eprint={2505.18134},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2505.18134}, 
+}
+```
+
 This website template is based on the [Nerfies website](https://nerfies.github.io).
 ```
 @article{park2021nerfies
