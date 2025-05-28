@@ -355,6 +355,7 @@
           <h2 class="subtitle is-header">Can Vision-Language Models complete popular video games?</h2>
           <p class="authors">
             Alex L. Zhang, Thomas L. Griffiths, Karthik R. Narasimhan, Ofir Press
+            <img src="./static/images/princeton.png" alt="Princeton University" style="height: 3em; margin-left: 0.5rem; vertical-align: middle;">
           </p>
           <div class="button-container">
             <a href="https://arxiv.org/abs/2505.18134" class="button is-hollow">
@@ -411,7 +412,7 @@
 
               <div style="text-align: center;">
                 <img src="./static/images/collage.png" alt="VideoGameBench Overview" class="overview-image">
-                <p class="caption" style="margin-top: 1rem; color: #666; font-size: 0.9rem;"><b>Figure 1.</b> The list of public games on <strong>VideoGameBench</strong>, spanning 20 different games on MS-DOS and Game Boy consoles.</p>
+                <p class="caption" style="margin-top: 1rem; color: #666; font-size: 0.9rem;">The list of public games on <strong>VideoGameBench</strong>, spanning 20 different games on MS-DOS and Game Boy consoles.</p>
               </div>
 
             <p>A huge bottleneck in playing games with VLMs is the high inference time for VLMs to produce an action. We therefore also introduce <strong>VideoGameBench Lite</strong>, a setting where the game environment pauses while waiting for the model's next action.</p>
@@ -446,6 +447,7 @@
           <thead>
             <tr>
               <th>Model</th>
+              <th class="overall-col">Overall Score</th>
               <th class="game-col">Civilization I</th>
               <th class="game-col">The Need for Speed</th>
               <th class="game-col">The Incredible Machine</th>
@@ -456,12 +458,12 @@
               <th class="game-col">Secret Game #1</th>
               <th class="game-col">Secret Game #2</th>
               <th class="game-col">Secret Game #3</th>
-              <th class="game-col overall-col">Overall Score</th>
             </tr>
           </thead>
           <tbody>
             <tr class="model-row closed">
               <td class="model-name">VG-Agent + Gemini 2.5 Pro <code>(gemini-2.5-pro-preview-03-25)</code></td>
+              <td class="score-cell score-low overall-col"><strong>0.48%</strong></td>
               <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-0 game-col">0%</td>
@@ -472,10 +474,10 @@
               <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-low overall-col"><strong>0.48%</strong></td>
             </tr>
             <tr class="model-row closed">
               <td class="model-name">VG-Agent + GPT-4o <code>(gpt-4o-2024-08-06)</code></td>
+              <td class="score-cell score-low overall-col"><strong>0.09%</strong></td>
               <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-0 game-col">0%</td>
@@ -486,49 +488,48 @@
               <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-low overall-col"><strong>0.09%</strong></td>
             </tr>
             <tr class="model-row closed">
               <td class="model-name">VG-Agent + Sonnet 3.7 <code>(claude-3-7-sonnet-20250219)</code></td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-0 overall-col"><strong>0%</strong></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
             </tr>
             <tr class="model-row open">
               <td class="model-name">VG-Agent + Llama 4 Maverick <code>(llama-4-maverick-17B-128E-Instruct-FP8)</code></td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-0 overall-col"><strong>0%</strong></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
             </tr>
             <tr class="model-row closed">
               <td class="model-name">VG-Agent + Gemini 2.0 Flash <code>(gemini-2.0-flash)</code></td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-0 overall-col"><strong>0%</strong></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
             </tr>
           </tbody>
         </table>
@@ -538,47 +539,47 @@
           <thead>
             <tr>
               <th>Model</th>
+              <th class="overall-col">Overall Score</th>
               <th class="game-col">Doom II</th>
               <th class="game-col">Kirby's Dream Land</th>
               <th class="game-col">Link's Awakening (DX)</th>
-              <th class="game-col overall-col">Overall Score</th>
             </tr>
           </thead>
           <tbody>
             <tr class="model-row closed">
               <td class="model-name">VG-Agent + GPT-4o <code>(gpt-4o-2024-08-06)</code></td>
+              <td class="score-cell score-low overall-col"><strong>1.6%</strong></td>
               <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-med non-zero game-col">4.8%</td>
               <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-low overall-col"><strong>1.6%</strong></td>
             </tr>
             <tr class="model-row closed">
               <td class="model-name">VG-Agent + Sonnet 3.7 <code>(claude-3-7-sonnet-20250219)</code></td>
+              <td class="score-cell score-low overall-col"><strong>1.6%</strong></td>
               <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-med non-zero game-col">4.8%</td>
               <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-low overall-col"><strong>1.6%</strong></td>
             </tr>
             <tr class="model-row closed">
               <td class="model-name">VG-Agent + Gemini 2.5 Pro <code>(gemini-2.5-pro-preview-03-25)</code></td>
+              <td class="score-cell score-low overall-col"><strong>1.6%</strong></td>
               <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-med non-zero game-col">4.8%</td>
               <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-low overall-col"><strong>1.6%</strong></td>
             </tr>
             <tr class="model-row open">
               <td class="model-name">VG-Agent + Llama 4 Maverick <code>(llama-4-maverick-17B-128E-Instruct-FP8)</code></td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-0 overall-col"><strong>0%</strong></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
             </tr>
             <tr class="model-row closed">
               <td class="model-name">VG-Agent + Gemini 2.0 Flash <code>(gemini-2.0-flash)</code></td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
-              <td class="score-cell score-0 game-col">0%</td>
               <td class="score-cell score-0 overall-col"><strong>0%</strong></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
             </tr>
           </tbody>
         </table>
