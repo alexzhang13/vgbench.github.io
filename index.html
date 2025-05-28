@@ -2,562 +2,747 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description"
-        content="VideoGameBench is a benchmark for video game VLM agents.">
+  <meta name="description" content="VideoGameBench is a benchmark for video game VLM agents.">
   <meta name="keywords" content="VideoGameBench, VG-Bench">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VideoGameBench [Research Preview]</title>
+  <title>VideoGameBench</title>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-709F9STDPN"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-  
-    gtag('config', 'G-709F9STDPN');
-  </script>
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.svg">
+  <link rel="icon" href="./static/images/ico.ico">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+  <style>
+    @font-face {
+      font-family: 'HardPixel';
+      src: url('./hardpixel/HardPixel.OTF') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 2.5rem 0;
+      margin-bottom: 2rem;
+      color: white;
+    }
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .header-logo {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      order: 1;
+      transform: translateY(-50px);
+    }
+    .header-text {
+      text-align: left;
+      order: 2;
+    }
+    .title.is-header {
+      font-family: 'HardPixel', 'Google Sans', sans-serif;
+      font-size: 6rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+    .subtitle.is-header {
+      font-size: 1.8rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 300;
+      margin-bottom: 0;
+    }
+    .authors {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      text-align: left;
+    }
+    .button-container {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-start;
+      margin-top: 2.5rem;
+      margin-bottom: 0;
+    }
+    .button.is-hollow {
+      background-color: transparent;
+      border: 2px solid white;
+      color: white;
+    }
+    .button.is-hollow:hover {
+      background-color: white;
+      color: #667eea;
+    }
+    .leaderboard {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .filter-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-start;
+      margin-bottom: 2rem;
+    }
+    .filter-btn {
+      padding: 0.75rem 1.5rem;
+      border: 2px solid #ff9800;
+      background: white;
+      color: #ff9800;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+    .filter-btn.active {
+      background: #ff9800;
+      color: white;
+    }
+    .filter-btn:hover {
+      background: #ff9800;
+      color: white;
+    }
+    .table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+    }
+    .leaderboard-table th,
+    .leaderboard-table td {
+      padding: 0.75rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      white-space: nowrap;
+      font-size: 0.85rem;
+    }
+    .leaderboard-table th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      font-size: 0.8rem;
+    }
+    .leaderboard-table th:first-child,
+    .leaderboard-table td:first-child {
+      text-align: left;
+      position: sticky;
+      left: 0;
+      background-color: #f8f9fa;
+      z-index: 5;
+      min-width: 250px;
+      font-size: 0.8rem;
+    }
+    .leaderboard-table td:first-child {
+      background-color: white;
+      font-weight: 500;
+    }
+    .leaderboard-table tr:hover {
+      background-color: #f5f5f5;
+    }
+    .score-cell {
+      background-color: white !important;
+    }
+    .score-cell.non-zero {
+      font-weight: bold;
+      color: black;
+    }
+    .score-0 { color: black; }
+    .score-low { color: black; }
+    .score-med { color: black; }
+    .score-high { color: black; }
+    .overall-row {
+      background-color: #e8f4fd !important;
+      font-weight: bold;
+    }
+    .overall-row td {
+      background-color: #e8f4fd !important;
+    }
+    .overall-row .score-cell {
+      font-weight: bold;
+    }
+    .model-name {
+      font-weight: 500;
+    }
+    .model-name code {
+      font-size: 0.75em;
+      color: #666;
+      background-color: #f1f3f4;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+    .overall-col {
+      background-color: #e8f4fd !important;
+      font-weight: bold;
+    }
+    .mode-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #ddd;
+    }
+    .mode-tab {
+      padding: 1rem 2rem;
+      border: none;
+      background: none;
+      color: #666;
+      cursor: pointer;
+      font-weight: bold;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .mode-tab.active {
+      color: #ff9800;
+      border-bottom-color: #ff9800;
+    }
+    .mode-tab:hover {
+      color: #ff9800;
+    }
+    .filter-checkboxes {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .checkbox-container input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #ff9800;
+    }
+    .filter-status {
+      color: #666;
+      font-style: italic;
+    }
+    .overview-box, .citation-box {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+    .overview-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+    .overview-image {
+      max-width: 900px;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .overview-text {
+      width: 100%;
+    }
+    .overview-text p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      color: #333;
+    }
+    .citation-text {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+      padding: 1rem;
+      margin-top: 1rem;
+      overflow-x: auto;
+      margin: 0;
+      flex: 1;
+      position: relative;
+    }
+    .citation-text code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+      color: #000;
+      font-weight: bold;
+    }
+    .citation-container {
+      position: relative;
+      margin-top: 1rem;
+    }
+    .copy-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      white-space: nowrap;
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      font-size: 0.85em;
+    }
+    .copy-button:hover {
+      background-color: #0056b3;
+    }
+    @media (max-width: 768px) {
+      .overview-image {
+        max-width: 100%;
+      }
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      .header-text {
+        text-align: center;
+      }
+      .title.is-header {
+        font-size: 3.5rem;
+      }
+      .subtitle.is-header {
+        font-size: 1.5rem;
+      }
+      .header-logo {
+        width: 60px;
+        height: 60px;
+      }
+      .authors {
+        text-align: center;
+      }
+      .button-container {
+        justify-content: center;
+      }
+    }
+    .section-divider {
+      width: 100%;
+      height: 2px;
+      background-color: #e9ecef;
+      margin: 1rem 0 2rem 0;
+      border: none;
+    }
+    .table td, .table th {
+      background-color: white !important;
+    }
+    .videogamebench {
+      font-family: 'HardPixel', 'Google Sans', sans-serif;
+    }
+  </style>
 </head>
+
 <body>
-
-<section class="hero" style="background-color: #1a237e; padding-top: 0.5rem; padding-bottom: 0.5rem;"> <!-- Reduced section padding -->
-  <div class="hero-body" style="padding-top: 0.5rem; padding-bottom: 0.5rem;"> <!-- Reduced hero-body padding -->
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title publication-title mb-0" style="color: #ffffff; font-size: 3.6rem;">VideoGameBench</h1> <!-- Reduced font size, Set margin bottom to 0 -->
-          <h2 class="title is-2 publication-title mb-0" style="color: #ffffff; font-size: 2.0rem;">[Research Preview]</h2> <!-- Reduced font size, Set margin bottom to 0 -->
-          <div class="is-size-5 publication-authors mb-0" style="color: #e3f2fd;"> <!-- Set margin bottom to 0 -->
-            <span class="author-block">
-              <a href="https://alexzhang13.github.io/">Alex Zhang</a> and </span> <!-- Removed sup tag -->
-            <span class="author-block">
-              <a href="https://ofir.io/">Ofir Press</a></span> <!-- Removed sup tag -->
-          </div>
-
-          <div class="is-size-6 publication-authors mt-0 mb-0" style="color: #e3f2fd; line-height: 1;"> <!-- Reduced font size, set margins to 0, reduced line height -->
-            <span class="author-block">Princeton University</span> <!-- Removed sup tag -->
-          </div>
-
-          <div class="column has-text-centered p-0 mt-0 mb-0"> <!-- Explicitly set top and bottom margin to 0 -->
-            <div class="publication-links"> <!-- Removed vertical padding -->
-              <!-- Commenting out arXiv button -->
-              <!-- <span class="link-block">
-                <a href="https://arxiv.org/abs/2011.12948"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span> -->
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="https://github.com/alexzhang13/VideoGameBench"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
+  <section class="header">
+    <div class="container has-text-centered">
+      <div class="header-content">
+        <img src="./static/images/logo.png" alt="VideoGameBench Logo" class="header-logo">
+        <div class="header-text">
+          <h1 class="title is-header">VideoGameBench</h1>
+          <h2 class="subtitle is-header">Can Vision-Language Models complete popular video games?</h2>
+          <p class="authors">
+            Alex L. Zhang, Thomas L. Griffiths, Karthik R. Narasimhan, Ofir Press
+          </p>
+          <div class="button-container">
+            <a href="https://arxiv.org/abs/2505.18134" class="button is-hollow">
+              <span class="icon">
+                <i class="fas fa-file-pdf"></i>
               </span>
-              <!-- Dataset Link. -->
-              <!-- Commenting out Data button -->
-              <!-- <span class="link-block">
-                <a href="https://github.com/google/nerfies/releases/tag/0.1"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="far fa-images"></i>
-                  </span>
-                  <span>Data</span>
-                  </a>
-              </span> -->
-            </div>
-
+              <span>Paper</span>
+            </a>
+            <a href="https://github.com/alexzhang13/VideoGameBench" class="button is-hollow">
+              <span class="icon">
+                <i class="fab fa-github"></i>
+              </span>
+              <span>GitHub</span>
+            </a>
+            <a href="https://discord.gg/W89VqYhQcy" class="button is-hollow">
+              <span class="icon">
+                <i class="fab fa-discord"></i>
+              </span>
+              <span>Discord</span>
+            </a>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <br>
-    <div class="hero-body">
-      <video id="teaser" autoplay muted loop playsinline height="100%" controls>
-        <source src="./static/videos/teaser_c.mp4"
-                type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        <b>Figure 1.</b> <a href="https://openai.com/index/hello-gpt-4o/">GPT-4o</a>, <a href="https://www.anthropic.com/claude/sonnet">Claude Sonnet 3.7</a>, <a href="https://blog.google/technology/google-deepmind/gemini-model-thinking-updates-march-2025/">Gemini 2.5 Pro</a>, and <a href="https://deepmind.google/technologies/gemini/flash/">Gemini 2.0 Flash</a>
-        playing Doom II (default difficulty) on <span class="dnerf">VideoGameBench-Lite</span> with the same input prompt! 
-        Models achieve varying levels of success but none are able to pass even the first level. 
-      </h2>
-    </div>
-  </div>
-</section>
-
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3" style="text-align: left;">tldr;</h2>
-        <div class="content has-text-justified">
-          <p>
-            We introduce a research preview of <span class="dnerf">VideoGameBench</span>, a benchmark which challenges 
-            vision-language models to complete, in real-time, a suite of 20 different 
-            popular video games from both hand-held consoles and PC.
-          </p>
-          <p>
-            We also introduce <span class="dnerf">VideoGameBench-Lite</span>, a subset of the games 
-            where the environment pauses the game while the model is thinking, 
-            thereby ignoring the long inference latency bottleneck of modern 
-            vision-language models (VLMs). 
-            </p>
+  <!-- Overview Section -->
+  <section class="section">
+    <div class="container">
+      <div class="overview-box">
+        <h2 class="title is-3">Overview</h2>
+        <hr class="section-divider">
+        <div class="overview-content">
+          
+          <div class="overview-text">
             <p>
-            Our benchmark focuses entirely on whether 
-            VLM agents can beat these games in their entirety, given only raw 
-            visual frames from the game. In this research preview, we 
-            provide code, explanations of our framework, and initial observations of our basic agent playing these games.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Abstract. -->
-
-    <!-- Paper video. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <video id="teaser" autoplay muted loop playsinline height="100%">
-          <source src="./static/videos/games.mp4"
-                  type="video/mp4">
-        </video>
-        <h2 class="subtitle has-text-centered">
-          <b>Figure 2.</b> A sample selection of games from <span class="dnerf">VideoGameBench</span> that our <span class="dnerf">VideoGameAgent</span> is playing (with thoughts and actions side-by-side). Each game has different mechanics, gameplay, and visuals.
-        </h2>
-      </div>
-    </div>
-    <!--/ Paper video. -->
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <!-- Animation. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
- 
-        <div class="content has-text-justified">
-          <p>
-            Language models (LMs) have shown to be capable of solving incredibly difficult reasoning tasks such as math 
-            [<a href="#ref-17">17</a>,<a href="#ref-18">18</a>,<a href="#ref-19">19</a>] and coding [<a href="#ref-19">19</a>,<a href="#ref-20">20</a>,<a href="#ref-21">21</a>]. Many of these tasks are extraordinarily difficult for the average person, 
-            primarily due to the large amount of prerequisite knowledge and pattern recognition abilities required. On the 
-            other hand, while humans can complete video games, we have yet to see even the state-of-the-art LMs or VLMs 
-            complete games such as Doom or Pokemon [<a href="#ref-14">14</a>]. This has led the community to focus on simple or hand-written games 
-            [<a href="#ref-7">7</a>,<a href="#ref-15">15</a>].
-            Solving real video games requires long-term and short-term reasoning, spatial understanding, and intuition (e.g. 
-            you need to find a key to open the locked door). In the past, AI models for games were trained specifically on 
-            one game using an exponentially large exploration and/or expert trajectory budget [<a href="#ref-1">1</a>,<a href="#ref-2">2</a>,<a href="#ref-3">3</a>,<a href="#ref-4">4</a>,<a href="#ref-8">8</a>,<a href="#ref-22">22</a>]. VLMs are an 
-            interesting alternative that can potentially solve multiple different types of games, even without explicitly 
-            seeing them before. Thus, in the full <span class="dnerf">VideoGameBench</span>, we also plan to provide a secret eval suite of games that 
-            agents can evaluate on for performance.
-          </p>
-        </div>
-        <br>
-        <!-- Interpolating. -->
-        <h3 class="title is-2">VideoGameBench Framework and Environment</h3>
-        <div class="content has-text-justified">
-          <p>
-            Our benchmark infrastructure provides a single environment in which an agent can 
-            play the 20 games we selected, over both the <a href="https://en.wikipedia.org/wiki/Game_Boy">Game Boy</a> and <a href="https://en.wikipedia.org/wiki/MS-DOS">MS-DOS</a> platforms.  
-            At a high-level, our framework abstracts away the game emulator 
-            (currently supporting Game Boy through <a href="https://github.com/Baekalfen/PyBoy">PyBoy</a> and MS-DOS through <a href="https://www.dosbox.com/">DOSBOX</a>) 
-            and provides the agent with the input and output it needs:
-          <ol>
-            <li>Observations, in this case the game screen as an image</li>
-            <li>An interface to communicate with the game "controller", through an action (e.g. press "<b>Space</b>"), a sequence of actions (e.g. press "<b>A</b>","<b>A</b>","<b>Start</b>"), or a sequence of timed actions (e.g. press "<b>Space</b>" for 5 seconds and then press "<b>A</b>").</li>
-            <li>An indication of whether the game was successfully completed or not.</li>
-          </ol>
-
-          We stray away from including extra game information like parsed text or in-game 
-          masks (as in DeepMind's StarCraft II AlphaStar [<a href="#ref-2">2</a>] and the PySC2 [<a href="#ref-23">23</a>] work) and focus on only providing the game screen to the model. 
-          </p>
-
-          <p>
-          In this research preview, we provide a minimal implementation of our benchmark setup so you can quickly fork 
-          and try your own agents on the benchmark! We are working on some other agent-specific features with our paper 
-          release in the near future that are not currently included in our codebase. To help you build more complex agents, 
-          we also provide a basic <span class="dnerf">VideoGameAgent</span> with memory and a corresponding UI 
-          that works out-of-the-box with most common LLM API providers (e.g. GPT, Claude, Gemini, Deepseek, etc.) 
-          through <a href="https://github.com/BerriAI/litellm">LiteLLM</a>. You can see the UI side-by-side with the game below:
-          </p>
-        <div class="columns is-centered">
-          <div class="column is-7">
-            <div class="content has-text-centered">
-              <img src="./static/images/game_screen.png" alt="Game Screen" width="100%">
+              <strong>VideoGameBench</strong> is a benchmark composed of a diverse suite of 23 curated video games split across a <code>dev</code> and <code>test</code> set, with an environment to evaluate and communicate with VLM-based agents. The task is to solve the core objective of each game, e.g. defeating the final boss in Super Mario Land or completing the entire single-player campaign for Age of Empires.</strong>
+            
+          <!-- Teaser Section -->
+          <section class="section">
+            <div class="container">
+              <div class="has-text-centered">
+                <video autoplay controls style="max-width: 60%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                  <source src="./static/videos/teaser.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
             </div>
-          </div>
-          <div class="column is-5">
-            <div class="content has-text-centered">
-              <img src="./static/images/ui_demo.jpg" alt="VideoGameBench UI" width="100%">
-            </div>
-          </div>
-          </div>
-            <p class="caption" style="text-align: center;"><b>Figure 3.</b> Our environment contains some simple UI code for tracking its thoughts, actions, and memory per step. </p>
-          </div>
-        <br/>
+          </section>
 
-        <p>
-        Currently, we focus our benchmark on older Game Boy and classic MS-DOS video games
-        because (1) they are noticeably simpler in visual cues than recent games and (2)
-        they cover both controller and mouse + keyboard mechanics, which present different challenges to a VLM's spatial reasoning abilities than text-based / terminal game actions <span style="color: #4286f4">[6,24]</span>.
-        </p>
-        
-        <br>
-        <p>
-        <b>Benchmarking progress and game completion.</b> Finally, emulators and game engines 
-        do not provide a special reward signal for game completion. 
-        Therefore, we build a mechanism for detecting whether the agent has successfully 
-        completed the game.  We do this by matching between reference "game completed" 
-        screenshots and the agent's current screen -- this strategy is also useful 
-        for user-defined "sub-goal completion" detection, which is useful for 
-        benchmarking partial progress or campaign completion for certain games (e.g. <a href="https://en.wikipedia.org/wiki/Warcraft_II:_Tides_of_Darkness">Warcraft II</a>, where we're only interested in completing the "Orc" campaign). 
-        </p>
-        <br>
-      </div>
-    </div>
-    <!--/ Animation. -->
-    <hr>
-    <h3 class="title is-2">VideoGameBench: List of Games</h3>
-    <div class="content has-text-justified">
-      <div class="content has-text-centered">
-        <img src="./static/images/collage.png" alt="VideoGameBench Games" width="100%">
-      </div>
-      <p>
-      We selected games based on relative difficulty and diversity of gameplay characteristics, 
-      which we've roughly highlighted in the list below. Certain games involve completing 
-      the entire single player mode (e.g. <a href="https://en.wikipedia.org/wiki/Super_Mario_Land">Super Mario Land</a>, 
-      <a href="https://en.wikipedia.org/wiki/The_Legend_of_Zelda:_Link%27s_Awakening">Legend of Zelda: Link's Awakening</a>) 
-      while others only involve completing a single campaign or game due to their lengths 
-      (e.g. <a href="https://en.wikipedia.org/wiki/Civilization_(video_game)">Civ 1</a>). 
-      For certain games we also included sequels due to sufficient variety in world exploration.
-      </p>
+            <p>We collect gameplay scenarios from iconic games spanning multiple genres and decades. Each task requires models to understand visual game states, interpret objectives, and make strategic decisions to progress through levels or achieve specific goals. 
+              VideoGameBench challenges models to complete entire games with <strong>only raw visual inputs and a high-level description of objectives and controls</strong>, a significant departure from existing setups that rely on game-specific scaffolding and auxiliary information.
 
-      <h4>MS-DOS 💻</h4>
-      <ol>
-        <li>Doom <span class="tag tag-3d">3D</span> <span class="tag tag-shooter">shooter</span></li>
-        <li>Doom II <span class="tag tag-3d">3D</span> <span class="tag tag-shooter">shooter</span></li>
-        <li>Quake <span class="tag tag-3d">3D</span> <span class="tag tag-shooter">shooter</span></li>
-        <li>Sid Meier's Civilization 1 <span class="tag tag-2d">2D</span> <span class="tag tag-strategy">strategy</span> <span class="tag tag-turn-based">turn-based</span></li>
-        <li>Warcraft II: Tides of Darkness (Orc Campaign) <span class="tag tag-2-5d">2.5D</span> <span class="tag tag-strategy">strategy</span></li>
-        <li>Oregon Trail Deluxe (1992) <span class="tag tag-2d">2D</span> <span class="tag tag-strategy">strategy</span> <span class="tag tag-turn-based">turn-based</span></li>
-        <li>X-COM UFO Defense <span class="tag tag-2d">2D</span> <span class="tag tag-strategy">strategy</span></li>
-        <li>The Incredible Machine (1993) <span class="tag tag-2d">2D</span> <span class="tag tag-puzzle">puzzle</span></li>
-        <li>Prince of Persia <span class="tag tag-2d">2D</span> <span class="tag tag-platformer">platformer</span></li>
-        <li>The Need for Speed <span class="tag tag-3d">3D</span> <span class="tag tag-racer">racer</span></li>
-        <li>Age of Empires (1997) <span class="tag tag-2d">2D</span> <span class="tag tag-strategy">strategy</span></li>
-      </ol>
+              <div style="text-align: center;">
+                <img src="./static/images/collage.png" alt="VideoGameBench Overview" class="overview-image">
+                <p class="caption" style="margin-top: 1rem; color: #666; font-size: 0.9rem;"><b>Figure 1.</b> The list of public games on <strong>VideoGameBench</strong>, spanning 20 different games on MS-DOS and Game Boy consoles.</p>
+              </div>
 
-      <h4>Game Boy 🎮</h4>
-      <ol>
-        <li>Pokemon Red (GB) <span class="tag tag-2d">2D</span> <span class="tag tag-grid-world">grid-world</span> <span class="tag tag-turn-based">turn-based</span></li>
-        <li>Pokemon Crystal (GBC) <span class="tag tag-2d">2D</span> <span class="tag tag-grid-world">grid-world</span> <span class="tag tag-turn-based">turn-based</span></li>
-        <li>Legend of Zelda: Link's Awakening (DX for GBC) <span class="tag tag-2d">2D</span> <span class="tag tag-open-world">open-world</span></li>
-        <li>Super Mario Land <span class="tag tag-2d">2D</span> <span class="tag tag-platformer">platformer</span></li>
-        <li>Kirby's Dream Land (<a href="https://www.romhacking.net/hacks/5213/">DX Mod for GBC</a>) <span class="tag tag-2d">2D</span> <span class="tag tag-platformer">platformer</span></li>
-        <li>Mega Man: Dr. Wily's Revenge <span class="tag tag-2d">2D</span> <span class="tag tag-platformer">platformer</span></li>
-        <li>Donkey Kong Land 2 <span class="tag tag-2d">2D</span> <span class="tag tag-platformer">platformer</span></li>
-        <li>Castlevania Adventure <span class="tag tag-2d">2D</span> <span class="tag tag-platformer">platformer</span></li>
-        <li>Scooby-Doo! - Classic Creep Capers <span class="tag tag-2d">2D</span> <span class="tag tag-detective">detective</span></li>
-      </ol>
+            <p>A huge bottleneck in playing games with VLMs is the high inference time for VLMs to produce an action. We therefore also introduce <strong>VideoGameBench Lite</strong>, a setting where the game environment pauses while waiting for the model's next action.</p>
 
-    </div>
-
-    <br>
-    <h3 class="title is-3">VideoGameBench-Lite: Giving Agents Time to Think 💭</h3>
-    <div class="content has-text-justified">
-      <div class="content has-text-centered">
-        <video id="teaser" autoplay muted loop playsinline height="100%" controls>
-          <source src="./static/videos/doom.mp4"
-                  type="video/mp4">
-        </video>
-        <p class="caption" style="margin-top: 10px; font-size: 0.9em; color: #666;"><b>Figure 4.</b> Our agent (using GPT-4o) plays Doom II (easiest difficulty) on 
-          <span class="dnerf">VideoGameBench-Lite</span>, so the environment pauses the game while the agent thinks. The agent is able to defeat enemies and run around the level.</p>
-      </div>
-      <p>
-       In our experience, current state-of-the-art VLMs substantially struggle to play video games because of high inference latency. 
-       When an agent takes a screenshot(s) and queries the VLM about what action to take, 
-       by the time the response comes back, the game state has changed significantly and the action is no longer relevant 
-       (for example, an enemy shooting at the agent when the screenshot was taken might have now moved to standing in front of the agent). 
-      </p>
-
-      <h4>Subset of VideoGameBench-Lite Games</h4>
-      <ol>
-        <li>Doom II <span class="tag tag-3d">3D</span> <span class="tag tag-shooter">shooter</span></li>
-        <li>Quake <span class="tag tag-3d">3D</span> <span class="tag tag-shooter">shooter</span></li>
-        <li>Prince of Persia <span class="tag tag-2d">2D</span> <span class="tag tag-platformer">platformer</span></li>
-        <li>Legend of Zelda: Link's Awakening (DX for GBC) <span class="tag tag-2d">2D</span> <span class="tag tag-open-world">open-world</span></li>
-        <li>Super Mario Land <span class="tag tag-2d">2D</span> <span class="tag tag-platformer">platformer</span></li>
-        <li>Kirby's Dream Land (<a href="https://www.romhacking.net/hacks/5213/">DX Mod for GBC</a>) <span class="tag tag-2d">2D</span> <span class="tag tag-platformer">platformer</span></li>
-      </ol>
-    </div>
-    <br>
-    <hr>
-    <h3 class="title is-2">Initial Observations on VideoGameBench</h3>
-    <div class="content has-text-justified">
-      <p>
-        It becomes apparent after running an agent on any of these games that <b>VLM agents are not close to solving an entire game, 
-        let alone even the first level of most games</b>. We have observed some interesting progress in games, e.g. 
-        our agent getting to the first mini-boss of <a href="https://en.wikipedia.org/wiki/Kirby%27s_Dream_Land">Kirby's Dream Land</a> that is interesting to observe.
-
-        This section is primarily focused on highlighting a few qualitative observations rather than rigorous quantitative experimentation. 
-        All experiments use a basic <span class="dnerf">VideoGameAgent</span> that uses ReAct [<a href="#ref-25">25</a>] with memory 
-        given a sequence of 5-10 frames and issues sequences of key-presses and mouse movements as actions.
-      </p>
-      <p>
-      <b style="color: #8B0000">Organizing thoughts and goal oriented-ness.</b> There have been several prior works that successfully use LLMs for planning in games [<a href="#ref-13">13</a>] and some others that have attempted to solve text games [<a href="#ref-8">8</a>,<a href="#ref-15">15</a>,<a href="#ref-24">24</a>]. 
-      In the multimodal setting, we found that agents often misinterpret events from the game screen -- this gap between visual event interpretation and the language understanding 
-      causes unintended behavior, which can also affect the internal goals proposed by the agent. In the example below, the agent wastes its ammo thinking dead enemies are alive.
-
-      <div style="text-align: center">
-        <video id="teaser" autoplay muted loop playsinline height="100%" controls>
-          <source src="./static/videos/doom2_confused_converted.mp4"
-                  type="video/mp4">
-        </video>
-        <p class="caption" style="margin-top: 10px; font-size: 0.9em; color: #666;"><b>Figure 5.</b> Our agent (using Claude Sonnet 3.7) plays Doom II on <span class="dnerf">VideoGameBench-Lite</span> and repeatedly
-          confuses dead enemies for alive ones, wasting all its ammo and affecting its strategies.
-      </div>
-
-      </p>
-      <p>
-      <b style="color: #8B0000">The granularity of an "action".</b> An immediate issue when running a VLM on any real-time video game is the 3-5 second inference delay 
-      between querying the VLM for an action given the current game screen and when the action is actually returned by the VLM. Inference latency
-      of large models is unavoidable, so an interesting question is what granularity a VLM "action" takes -- is it a single key press, a sequence
-      of key presses, code, or even a simple mini policy?
-
-      <div style="text-align: center">
-        <video id="teaser" autoplay muted loop playsinline height="100%" controls>
-          <source src="./static/videos/delay.webm"
-                  type="video/mp4">
-        </video>
-        <p class="caption" style="margin-top: 10px; font-size: 0.9em; color: #666;"><b>Figure 6.</b> Our agent (using GPT-4o) plays Super Mario Land in real-time
-          on <span class="dnerf">VideoGameBench</span>. The agent takes 3-5 seconds to respond to the current game screen, leading to it dying multiple times to the same Goomba.
-      </div>
-
-      </p>
-      <p>
-      <b style="color: #8B0000">Controller, Mouse + Keyboard Precision.</b> We found several instances of the agent / VLM struggling to translate the effect of actions (e.g. move right)
-      on the screen. The most obvious across all frontier models we tried (e.g. GPT-4o, Claude Sonnet 3.7, Gemini 2.5 Pro) was the inability to accurately move
-      the position of the mouse for games like Civilization and Warcraft II, where frequent mouse movements are necessary.
-
-      <div style="text-align: center">
-        <img src="./static/videos/warcraft2.gif" height="100%">
-        <p class="caption" style="margin-top: 10px; font-size: 0.9em; color: #666;"><b>Figure 7.</b> Our agent (using GPT-4o) plays Warcraft II in real-time
-          on <span class="dnerf">VideoGameBench</span>. The agent struggles to move the mouse to the correct position, leading to it clicking "load game" instead of "new game" each.
-      </div>
-
-      </p>
-      <p>
-      <b style="color: #8B0000">Unintuitive Game Mechanics.</b> Unless explicitly prompted with proper instructions, many game mechanics are not obvious
-      to VLMs. While seemingly obvious, this fact becomes more important when benchmarking on "secret" games, where game-specific
-      prompts may be impossible and the model has to learn these mechanics from scratch.
-
-      <div style="text-align: center">
-        <video id="teaser" autoplay muted loop playsinline height="100%" controls>
-          <source src="./static/videos/kirby_converted.mp4"
-                  type="video/mp4">
-        </video>
-        <p class="caption" style="margin-top: 10px; font-size: 0.9em; color: #666;"><b>Figure 8.</b> Our agent (using GPT-4o) plays Kirby Dream Land on <span class="dnerf">VideoGameBench-Lite</span>. 
-          The agent gets to the first mini-boss, but does not know it can copy abilities after swallowing the bomb and use it to easily defeat the boss.
-      </div>
-      </p>
-    </div>
-
-    <h3 class="title is-2">Previous Work</h3>
-    <div class="content has-text-justified">
-      <h3 class="title is-5">Reinforcement Learning (RL) on Games</h3>
-      <p>
-        The premise of this question is a bit mis-leading, since certain data-driven RL methods have already proven 
-        to be able to fully solve games better than humans. For starters, RL has been able to solve Atari games [<a href="#ref-1">1</a>] 
-        for almost a decade now. In terms of superhuman game-playing AI, DeepMind's AlphaGo [<a href="#ref-22">22</a>] was a neural network 
-        capable of defeating the human world champion, but it was arguable that the game's state and 
-        action spaces are discrete. It was then believed that video games were infinitely more complicated, 
-        but it turned out with DeepMind's AlphaStar [<a href="#ref-2">2</a>] and OpenAI Five [<a href="#ref-3">3</a>] that proper featurization of the 
-        game environment made it roughly equivalent to the AlphaGo problem. Even in 3D game settings where this 
-        featurization is significantly more difficult, there have been strong efforts such as the Dreamer papers [<a href="#ref-4">4</a>] 
-        that are actively building agents on games like Minecraft.
-
-        Recently, a larger question with RL on video games is whether language-heavy games can be solved. 
-        These methods rely on using language models to replace / model some module of the reinforcement learning pipeline, 
-        e.g. the value function. One particularly interesting modern example are new agents on the popular 
-        turn-based battle simulator <a href="https://pokemonshowdown.com/" target="_blank">Pokemon Showdown</a>, which have now achieved human-competitive performance using a mix of language models and RL-style policies [<a href="#ref-5">5</a>].
-        Another prominent example is the <a href="https://ai.meta.com/research/cicero/diplomacy/" target="_blank">CICERO</a> agent [<a href="#ref-26">26</a>] for the multi-player strategy game <a href="https://en.wikipedia.org/wiki/Diplomacy_(game)" target="_blank">Diplomacy</a>.
-
-      </p>
-
-      <h3 class="title is-5">Pure VLMs and LMs playing Video Games.</h3>
-      <p>
-      There exists a class of unsolved video games that are extremely difficult for both RL methods and VLMs to solve. 
-      These games tend to involve some form of language component, long-form exploration / objectives, and 
-      spatial reasoning puzzles – the <a href="https://balrogai.com/">BALROG</a> benchmark contains a suite of these games for VLMs to 
-      solve with progress indicators [<a href="#ref-6">6</a>]. One of the most popular case studies of AI for games 
-      has been <a href="https://en.wikipedia.org/wiki/NetHack">NetHack</a> [<a href="#ref-6">6</a>,<a href="#ref-8">8</a>,<a href="#ref-9">9</a>] which is a grid world terminal game with an extraordinarily 
-      complex combat, item, and dungeoning system (+ randomization) that makes it difficult for humans to complete. 
-      </p>
-      <p>
-      <span class="dnerf">VideoGameBench</span> deviates slightly from these benchmarks in that a possible solution to most of the games 
-      is to learn a policy through "sufficiently large" RL-style exploration 
-      (e.g. Pokemon Red has been solved multiple times using RL [<a href="#ref-10">10</a>,<a href="#ref-11">11</a>], shooters like Doom have RL training platforms [<a href="#ref-16">16</a>]). 
-      Unlike RL algorithms, while certain information about video games are most likely present in the training data of VLMs, 
-      it is significantly smaller than what is provided to RL methods. There have been some preliminary works in this area that try to in-context learn a policy from a VLM
-      for even simpler games as well [<a href="#ref-27">27</a>].
-
-      Recently, there has been a lot more interest in evaluating the capabilities of newer frontier models and 
-      agent approaches for solving the aforementioned games such as 
-      <a href="https://www.twitch.tv/claudeplayspokemon" target="_blank">Claude plays Pokemon</a> and now <a href="https://www.twitch.tv/gemini_plays_pokemon" target="_blank">Gemini plays Pokemon</a> (which uses a more interesting agentic approach).
-      Another recent major effort has been by the <a href="https://hao-ai-lab.github.io/" target="_blank">Hao AI lab</a> to build a <a href="https://github.com/lmgame-org/GamingAgent" target="_blank">platform</a> for
-      VLM agents to play games like Mario, Sokoban, and Candy Crush in real-time (their work is awesome so please check them out!) [<a href="#ref-12">12</a>].
-      </p>
-      <p>
-        <span class="dnerf">VideoGameBench</span> and <span class="dnerf">VideoGameBench-Lite</span> similarly focus on real video games, 
-        but use a fixed and diverse set of challenging games (e.g. platformers, shooters, RTS, RPGs, 2D, 2.5D, 3D, etc.) 
-        with a standard common interface. The common environment is also designed to eventually enable plugging in various emulators without any extra friction. 
-      </p>
-    </div>
-
-    <h3 class="title is-2">Extending to New Games</h3>
-    <div class="content has-text-justified">
-      <p>
-        It is easy to run other Game Boy or MS-DOS games on our platform by downloading the ROM / js-dos link and adding a new config with specifications (e.g. defining a game-specific prompt, a preset list of actions to run when a game loads like pre-selecting the difficulty, and game settings). We provide explicit instructions in our GitHub README.
-
-        Extending to other emulators is also relatively simple, but we currently do not support this in a no-code fashion. We want to add diverse support to maintain our benchmark, so we welcome open-source contributions – we generally would like to work in the open!
-
-        Finally, we picked a specific set of games for our benchmark, but we encourage people to run and experiment with other games on our environment.
-        
-      </p>
-      <p>
-        We want to emphasize that the development of <span class="dnerf">VideoGameBench</span> was made possible by leveraging existing open-source emulators. We are grateful to the developers of <a href="https://github.com/Baekalfen/PyBoy" target="_blank">PyBoy</a>, <a href="https://www.dosbox.com/" target="_blank">DOSBox</a>, <a href="https://js-dos.com/overview.html" target="_blank">JS-DOS</a>, and <a href="https://playwright.dev/" target="_blank">Playwright</a>. This benchmark uses proprietary games, please make sure to purchase these games before running the benchmark.
-      </p>
-
-    </div>
-
-    <hr>
-    <h3 class="title is-2">Last Thoughts</h3>
-    <div class="content has-text-justified">
-      <p>
-        Benchmarking frontier models and agents on real video games is both flashy and experimentally useful for measuring reasoning capabilities. Unlike extremely complicated domains like unsolved math proofs and olympiad-level math problems, playing video games is not a superhuman reasoning task, yet models still struggle to solve them. Furthermore, while most progress has been on LLM and text-only reasoning, few benchmarks evaluate reasoning capabilities over multimodal domains in an interpretable and widely understandable setting. 
-      </p>
-      <p>
-        <b>[Open-source]</b> We have worked on many open-source projects and gladly welcome contributions from the community to expand the suite of games and supported emulators. Details on contributing can be found in the project repository: <a href="https://github.com/alexzhang13/videogamebench" target="_blank">https://github.com/alexzhang13/videogamebench</a>.
-      </p>
-
-    </div>
-
-    <!-- Concurrent Work. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <div class="content has-text-justified">
-          <h3 class="title is-4">References</h3>
-          <div class="reference-list">
-            <p id="ref-1"><b>[1]</b> Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. <b>Playing Atari with deep reinforcement learning</b>, 2013. URL: <a href="https://arxiv.org/abs/1312.5602" target="_blank">https://arxiv.org/abs/1312.5602</a></p>
-            <p id="ref-2"><b>[2]</b> Oriol Vinyals, Igor Babuschkin, Wojciech M Czarnecki, Michaël Mathieu, Andrew Dudzik, Junyoung Chung, David H Choi, Richard Powell, Timo Ewalds, Petko Georgiev, et al. <b>Grandmaster level in Starcraft II using multi-agent reinforcement learning</b>. Nature, 575(7782):350-354, 2019. URL: <a href="https://deepmind.google/discover/blog/alphastar-grandmaster-level-in-starcraft-ii-using-multi-agent-reinforcement-learning/" target="_blank">https://deepmind.google/discover/blog/alphastar-grandmaster-level-in-starcraft-ii-using-multi-agent-reinforcement-learning/</a></p>
-            <p id="ref-3"><b>[3]</b> OpenAI Team. <b>OpenAI Five</b>. URL: <a href="https://openai.com/index/openai-five/" target="_blank">https://openai.com/index/openai-five/</a></p>
-            <p id="ref-4"><b>[4]</b> Danijar Hafner, Jurgis Pasukonis, Jimmy Ba, and Timothy Lillicrap. <b>Mastering diverse domains
-              through world models</b>. In Advances in Neural Information Processing Systems, 2023. URL: <a href="https://arxiv.org/abs/2301.04104" target="_blank">https://arxiv.org/abs/2301.04104</a></p>
-            <p id="ref-5"><b>[5]</b> Seth Karten and Andy Luu Nguyen and Chi Jin. <b>PokéChamp: an Expert-level Minimax Language Agent</b>. URL: <a href="https://arxiv.org/abs/2503.04094" target="_blank">https://arxiv.org/abs/2503.04094</a></p>
-            <p id="ref-6"><b>[6]</b> Davide Paglieri and Bartłomiej Cupiał and Samuel Coward and Ulyana Piterbarg and Maciej Wolczyk and Akbir Khan and Eduardo Pignatelli and Łukasz Kuciński and Lerrel Pinto and Rob Fergus and Jakob Nicolaus Foerster and Jack Parker-Holder and Tim Rocktäschel. <b>BALROG: Benchmarking Agentic LLM and VLM Reasoning On Games</b>. In International Conference on Learning Representations, 2025. URL: <a href="https://arxiv.org/abs/2411.13543" target="_blank">https://arxiv.org/abs/2411.13543</a></p>
-            <p id="ref-7"><b>[7]</b> Muhammad Umair Nasir and Steven James and Julian Togelius. <b>GameTraversalBenchmark: Evaluating Planning Abilities Of Large Language Models Through Traversing 2D Game Maps</b>. URL: <a href="https://arxiv.org/abs/2410.07765v1" target="_blank">https://arxiv.org/abs/2410.07765v1</a></p>
-            <p id="ref-8"><b>[8]</b> Jens Tuyls and Shunyu Yao and Sham Kakade and Karthik Narasimhan. <b>Multi-Stage Episodic Control for Strategic Exploration in Text Games</b>. URL: <a href="https://arxiv.org/abs/2201.01251" target="_blank">https://arxiv.org/abs/2201.01251</a></p>
-            <p id="ref-9"><b>[9]</b> Mikayel Samvelyan and Robert Kirk and Vitaly Kurin and Jack Parker-Holder and Minqi Jiang and Eric Hambro and Fabio Petroni and Heinrich Küttler and Edward Grefenstette and Tim Rocktäschel. <b>MiniHack the Planet: A Sandbox for Open-Ended Reinforcement Learning Research
-            </b>. URL: <a href="https://arxiv.org/abs/2109.13202" target="_blank">https://arxiv.org/abs/2109.13202</a></p>
-            <p id="ref-10"><b>[10]</b> David Rubinstein, Keelan Donovan, Daniel Addis, Kyoung Whan Choe, Joseph Suarez, Peter Whidden. <b>Pokemon RL Edition</b>. URL: <a href="https://drubinstein.github.io/pokerl/" target="_blank">https://drubinstein.github.io/pokerl/</a></p>
-            <p id="ref-11"><b>[11]</b> Peter Whidden. <b>Training AI to Play Pokemon with Reinforcement Learning</b>. URL: <a href="https://www.youtube.com/watch?v=DcYLT37ImBY" target="_blank">https://www.youtube.com/watch?v=DcYLT37ImBY</a></p>
-            <p id="ref-12"><b>[12]</b> Lanxiang Hu and Qiyu Li and Anze Xie and Nan Jiang and Ion Stoica and Haojian Jin and Hao Zhang. <b>GamingAgent - Personal Computer Gaming Agent</b>. URL: <a href="https://github.com/lmgame-org/GamingAgent" target="_blank">https://github.com/lmgame-org/GamingAgent</a></p>
-            <p id="ref-13"><b>[13]</b> Kolby Nottingham and Prithviraj Ammanabrolu and Alane Suhr and Yejin Choi and Hannaneh Hajishirzi and Sameer Singh and Roy Fox. <b>Do Embodied Agents Dream of Pixelated Sheep: Embodied Decision Making using Language Guided World Modelling</b>. URL: <a href="https://arxiv.org/abs/2301.12050" target="_blank">https://arxiv.org/abs/2301.12050</a></p>
-            <p id="ref-14"><b>[14]</b> Anthropic Team. <b>Claude Play Pokemon (twitch.tv)</b>. <a href="https://www.twitch.tv/claudeplayspokemon" target="_blank">https://www.twitch.tv/claudeplayspokemon</a></p>
-            <p id="ref-15"><b>[15]</b> Chen Feng Tsai and Xiaochen Zhou and Sierra S. Liu and Jing Li and Mo Yu and Hongyuan Mei. <b>Can Large Language Models Play Text Games Well? Current State-of-the-Art and Open Questions</b>. URL: <a href="https://arxiv.org/abs/2304.02868" target="_blank">https://arxiv.org/abs/2304.02868</a></p>
-            <p id="ref-16"><b>[16]</b> Wydmuch, Marek and Kempka, Michal and Jaskowski, Wojciech. <b>ViZDoom Competitions: Playing Doom from Pixels</b>. In IEEE Transactions on Games, 2019. URL: <a href="https://github.com/Farama-Foundation/ViZDoom" target="_blank">https://github.com/Farama-Foundation/ViZDoom</a></p>
-            <p id="ref-17"><b>[17]</b> Yong Lin and Shange Tang and Bohan Lyu and Jiayun Wu and Hongzhou Lin and Kaiyu Yang and Jia Li and Mengzhou Xia and Danqi Chen and Sanjeev Arora and Chi Jin. <b>Goedel-Prover: A Frontier Model for Open-Source Automated Theorem Proving</b>. URL: <a href="https://arxiv.org/abs/2502.07640" target="_blank">https://arxiv.org/abs/2502.07640</a></p>
-            <p id="ref-18"><b>[18]</b> Elliot Glazer and Ege Erdil and Tamay Besiroglu and Diego Chicharro and Evan Chen and Alex Gunning and Caroline Falkman Olsson and Jean-Stanislas Denain and Anson Ho and Emily de Oliveira Santos and Olli Järviniemi and Matthew Barnett and Robert Sandler and Matej Vrzala and Jaime Sevilla and Qiuyu Ren and Elizabeth Pratt and Lionel Levine and Grant Barkley and Natalie Stewart and Bogdan Grechuk and Tetiana Grechuk and Shreepranav Varma Enugandla and Mark Wildon. <b>FrontierMath: A Benchmark for Evaluating Advanced Mathematical Reasoning in AI</b>. URL: <a href="https://arxiv.org/abs/2411.04872" target="_blank">https://arxiv.org/abs/2411.04872</a></p>
-            <p id="ref-19"><b>[19]</b> OpenAI Team. <b>Learning to Reason with LLMs</b>. URL: <a href="https://openai.com/index/learning-to-reason-with-llms/" target="_blank">https://openai.com/index/learning-to-reason-with-llms/</a></p>
-            <p id="ref-20"><b>[20]</b> Michael Luo*, Sijun Tan*, Roy Huang*, Ameen Patel*, Alpay Ariyak*, Qingyang Wu*, Xiaoxiang Shi, Rachel Xin, Colin Cai, Maurice Weber, Ce Zhang, Li Erran Li, Raluca Ada Popa, Ion Stoica. <b>DeepCoder: A Fully Open-Source 14B Coder at O3-mini Level</b>. URL: <a href="https://www.together.ai/blog/deepcoder" target="_blank">https://www.together.ai/blog/deepcoder</a></p>
-            <p id="ref-21"><b>[21]</b> DeepSeek-AI and Daya Guo and Dejian Yang and Haowei Zhang and Junxiao Song and Ruoyu Zhang and Runxin Xu and Qihao Zhu and Shirong Ma and Peiyi Wang and Xiao Bi and Xiaokang Zhang and Xingkai Yu and Yu Wu and Z. F. Wu and Zhibin Gou and Zhihong Shao and Zhuoshu Li and Ziyi Gao and Aixin Liu and Bing Xue and Bingxuan Wang and Bochao Wu and Bei Feng and Chengda Lu and Chenggang Zhao and Chengqi Deng and Chenyu Zhang and Chong Ruan and Damai Dai and Deli Chen and Dongjie Ji and Erhang Li and Fangyun Lin and Fucong Dai and Fuli Luo and Guangbo Hao and Guanting Chen and Guowei Li and H. Zhang and Han Bao and Hanwei Xu and Haocheng Wang and Honghui Ding and Huajian Xin and Huazuo Gao and Hui Qu and Hui Li and Jianzhong Guo and Jiashi Li and Jiawei Wang and Jingchang Chen and Jingyang Yuan and Junjie Qiu and Junlong Li and J. L. Cai and Jiaqi Ni and Jian Liang and Jin Chen and Kai Dong and Kai Hu and Kaige Gao and Kang Guan and Kexin Huang and Kuai Yu and Lean Wang and Lecong Zhang and Liang Zhao and Litong Wang and Liyue Zhang and Lei Xu and Leyi Xia and Mingchuan Zhang and Minghua Zhang and Minghui Tang and Meng Li and Miaojun Wang and Mingming Li and Ning Tian and Panpan Huang and Peng Zhang and Qiancheng Wang and Qinyu Chen and Qiushi Du and Ruiqi Ge and Ruisong Zhang and Ruizhe Pan and Runji Wang and R. J. Chen and R. L. Jin and Ruyi Chen and Shanghao Lu and Shangyan Zhou and Shanhuang Chen and Shengfeng Ye and Shiyu Wang and Shuiping Yu and Shunfeng Zhou and Shuting Pan and S. S. Li and Shuang Zhou and Shaoqing Wu and Shengfeng Ye and Tao Yun and Tian Pei and Tianyu Sun and T. Wang and Wangding Zeng and Wanjia Zhao and Wen Liu and Wenfeng Liang and Wenjun Gao and Wenqin Yu and Wentao Zhang and W. L. Xiao and Wei An and Xiaodong Liu and Xiaohan Wang and Xiaokang Chen and Xiaotao Nie and Xin Cheng and Xin Liu and Xin Xie and Xingchao Liu and Xinyu Yang and Xinyuan Li and Xuecheng Su and Xuheng Lin and X. Q. Li and Xiangyue Jin and Xiaojin Shen and Xiaosha Chen and Xiaowen Sun and Xiaoxiang Wang and Xinnan Song and Xinyi Zhou and Xianzu Wang and Xinxia Shan and Y. K. Li and Y. Q. Wang and Y. X. Wei and Yang Zhang and Yanhong Xu and Yao Li and Yao Zhao and Yaofeng Sun and Yaohui Wang and Yi Yu and Yichao Zhang and Yifan Shi and Yiliang Xiong and Ying He and Yishi Piao and Yisong Wang and Yixuan Tan and Yiyang Ma and Yiyuan Liu and Yongqiang Guo and Yuan Ou and Yuduan Wang and Yue Gong and Yuheng Zou and Yujia He and Yunfan Xiong and Yuxiang Luo and Yuxiang You and Yuxuan Liu and Yuyang Zhou and Y. X. Zhu and Yanhong Xu and Yanping Huang and Yaohui Li and Yi Zheng and Yuchen Zhu and Yunxian Ma and Ying Tang and Yukun Zha and Yuting Yan and Z. Z. Ren and Zehui Ren and Zhangli Sha and Zhe Fu and Zhean Xu and Zhenda Xie and Zhengyan Zhang and Zhewen Hao and Zhicheng Ma and Zhigang Yan and Zhiyu Wu and Zihui Gu and Zijia Zhu and Zijun Liu and Zilin Li and Ziwei Xie and Ziyang Song and Zizheng Pan and Zhen Huang and Zhipeng Xu and Zhongyu Zhang and Zhen Zhang. <b>DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning</b>. URL: <a href="https://arxiv.org/abs/2501.12948" target="_blank">https://arxiv.org/abs/2501.12948</a></p>
-            <p id="ref-22"><b>[22]</b> David Silver, Aja Huang, Chris J. Maddison. et al. <b>Mastering the game of Go with deep neural networks and tree search</b>. Nature 529, 484-489 (2016). URL: <a href="https://www.nature.com/articles/nature16961" target="_blank">https://www.nature.com/articles/nature16961</a></p>
-            <p id="ref-23"><b>[23]</b> Oriol Vinyals and Timo Ewalds and Sergey Bartunov and Petko Georgiev and Alexander Sasha Vezhnevets and Michelle Yeo and Alireza Makhzani and Heinrich Küttler and John Agapiou and Julian Schrittwieser and John Quan and Stephen Gaffney and Stig Petersen and Karen Simonyan and Tom Schaul and Hado van Hasselt and David Silver and Timothy Lillicrap and Kevin Calderone and Paul Keet and Anthony Brunasso and David Lawrence and Anders Ekermo and Jacob Repp and Rodney Tsing. <b>StarCraft II: A New Challenge for Reinforcement Learning.</b> URL: <a href="https://arxiv.org/abs/1708.04782" target="_blank">https://arxiv.org/abs/1708.04782</a></p>
-            <p id="ref-24"><b>[24]</b> Shunyu Yao and Rohan Rao and Matthew Hausknecht and Karthik Narasimhan. <b>Keep CALM and Explore: Language Models for Action Generation in Text-based Games</b>. URL: <a href="https://arxiv.org/abs/2010.02903" target="_blank">https://arxiv.org/abs/2010.02903</a></p>
-            <p id="ref-25"><b>[25]</b> Shunyu Yao and Jeffrey Zhao and Dian Yu and Nan Du and Izhak Shafran and Karthik Narasimhan and Yuan Cao. <b>ReAct: Synergizing Reasoning and Acting in Language Models</b>. URL: <a href="https://arxiv.org/abs/2210.03629" target="_blank">https://arxiv.org/abs/2210.03629</a></p>
-            <p id="ref-26"><b>[26]</b> Meta Fundamental AI Research Diplomacy Team (FAIR), Anton Bakhtin, Noam Brown, Emily Dinan, Gabriele Farina, Colin Flaherty, Daniel Fried, Andrew Goff, Jonathan Gray, Hengyuan Hu, Athul Paul Jacob, Mojtaba Komeili, Karthik Konath, Minae Kwon, Adam Lerer, Mike Lewis, Alexander H. Miller, Sasha Mitts, Adithya Renduchintala, Stephen Roller, Dirk Rowe, Weiyan Shi, Joe Spisak, Alexander Wei, David Wu, Hugh Zhang, Markus Zijlstra. <b>Human-level play in the game of Diplomacy by combining language models with strategic reasoning</b>. URL: <a href="https://www.science.org/doi/10.1126/science.ade9097" target="_blank">https://www.science.org/doi/10.1126/science.ade9097</a></p>
-            <p id="ref-27"><b>[27]</b> Anian Ruoss and Fabio Pardo and Harris Chan and Bonnie Li and Volodymyr Mnih and Tim Genewein. <b>LMAct: A Benchmark for In-Context Imitation Learning with Long Multimodal Demonstrations</b>. URL: <a href="https://arxiv.org/abs/2412.01441" target="_blank">https://arxiv.org/abs/2412.01441</a></p>
+            <p><strong>VideoGameBench</strong> represents a novel approach to evaluating AI systems on tasks that require both visual intelligence and strategic thinking, providing insights into how well current models can understand and interact with complex interactive environments. We previously released a research preview of this benchmark with sample clips <a href="blog.html">here</a>.</p>
           </div>
         </div>
       </div>
     </div>
-    <!--/ Concurrent Work. -->
+  </section>
 
-  </div>
-</section>
+  <section class="leaderboard">
+    <div class="container">
+      <h2 class="title is-3"><span class="videogamebench">VideoGameBench</span> Leaderboard</h2>
+      
+      <!-- Mode Selection Tabs -->
+      <div class="mode-tabs">
+        <button class="mode-tab active" onclick="switchMode('full')">Full</button>
+        <button class="mode-tab" onclick="switchMode('lite')">Lite</button>
+      </div>
+      
+      <!-- Mode Description -->
+      <div id="mode-description" class="mode-description" style="display: none;">
+        <p style="margin-bottom: 2rem; color: #666; font-style: italic;">
+          <span>VideoGameBench</span> Lite is an alternative setting where the game pauses while waiting for the next model action. This decouples model performance from the high latency of large model inference.
+        </p>
+      </div>
+
+      <div class="table-container">
+        <!-- Full Table -->
+        <table class="leaderboard-table" id="full-table">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th class="game-col">Civilization I</th>
+              <th class="game-col">The Need for Speed</th>
+              <th class="game-col">The Incredible Machine</th>
+              <th class="game-col">Pokemon Crystal</th>
+              <th class="game-col">Doom II</th>
+              <th class="game-col">Kirby's Dream Land (DX)</th>
+              <th class="game-col">Link's Awakening (DX)</th>
+              <th class="game-col">Secret Game #1</th>
+              <th class="game-col">Secret Game #2</th>
+              <th class="game-col">Secret Game #3</th>
+              <th class="game-col overall-col">Overall Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="model-row closed">
+              <td class="model-name">VG-Agent + Gemini 2.5 Pro <code>(gemini-2.5-pro-preview-03-25)</code></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-med non-zero game-col">4.8%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-low overall-col"><strong>0.48%</strong></td>
+            </tr>
+            <tr class="model-row closed">
+              <td class="model-name">VG-Agent + GPT-4o <code>(gpt-4o-2024-08-06)</code></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-low non-zero game-col">0.9%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-low overall-col"><strong>0.09%</strong></td>
+            </tr>
+            <tr class="model-row closed">
+              <td class="model-name">VG-Agent + Sonnet 3.7 <code>(claude-3-7-sonnet-20250219)</code></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 overall-col"><strong>0%</strong></td>
+            </tr>
+            <tr class="model-row open">
+              <td class="model-name">VG-Agent + Llama 4 Maverick <code>(llama-4-maverick-17B-128E-Instruct-FP8)</code></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 overall-col"><strong>0%</strong></td>
+            </tr>
+            <tr class="model-row closed">
+              <td class="model-name">VG-Agent + Gemini 2.0 Flash <code>(gemini-2.0-flash)</code></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 overall-col"><strong>0%</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Lite Table -->
+        <table class="leaderboard-table" id="lite-table" style="display: none;">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th class="game-col">Doom II</th>
+              <th class="game-col">Kirby's Dream Land</th>
+              <th class="game-col">Link's Awakening (DX)</th>
+              <th class="game-col overall-col">Overall Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="model-row closed">
+              <td class="model-name">VG-Agent + GPT-4o <code>(gpt-4o-2024-08-06)</code></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-med non-zero game-col">4.8%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-low overall-col"><strong>1.6%</strong></td>
+            </tr>
+            <tr class="model-row closed">
+              <td class="model-name">VG-Agent + Sonnet 3.7 <code>(claude-3-7-sonnet-20250219)</code></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-med non-zero game-col">4.8%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-low overall-col"><strong>1.6%</strong></td>
+            </tr>
+            <tr class="model-row closed">
+              <td class="model-name">VG-Agent + Gemini 2.5 Pro <code>(gemini-2.5-pro-preview-03-25)</code></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-med non-zero game-col">4.8%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-low overall-col"><strong>1.6%</strong></td>
+            </tr>
+            <tr class="model-row open">
+              <td class="model-name">VG-Agent + Llama 4 Maverick <code>(llama-4-maverick-17B-128E-Instruct-FP8)</code></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 overall-col"><strong>0%</strong></td>
+            </tr>
+            <tr class="model-row closed">
+              <td class="model-name">VG-Agent + Gemini 2.0 Flash <code>(gemini-2.0-flash)</code></td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 game-col">0%</td>
+              <td class="score-cell score-0 overall-col"><strong>0%</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Examples Section -->
+  <section class="section">
+    <div class="container">
+      <div class="overview-box">
+        <h2 class="title is-3">VG-Agent Examples on VideoGameBench</h2>
+        <hr class="section-divider">
+        <div class="overview-content">
+          <div class="overview-text">
+            <p>
+              Here are some examples of VLM agents playing games on <strong>VideoGameBench</strong>. These clips demonstrate both the capabilities and current limitations of state-of-the-art vision-language models when faced with real-time gaming challenges.
+            </p>
+          </div>
+          
+          <div style="text-align: center; margin: 2rem 0;">
+            <video autoplay muted loop playsinline controls style="max-width: 50%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+              <source src="./static/videos/gemini-2-5-pro_kirby.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="caption" style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+              <b>Example 1.</b> Gemini 2.5 Pro plays Kirby's Dream Land in real-time, successfully navigating through the initial level and reaching the first mini-boss encounter. The agent demonstrates basic platforming abilities and enemy interaction.
+            </p>
+          </div>
+
+          <div style="text-align: center; margin: 2rem 0;">
+            <video autoplay muted loop playsinline controls style="max-width: 80%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+              <source src="./static/videos/gemini-2-5-pro_civ.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="caption" style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+              <b>Example 2.</b> Gemini 2.5 Pro plays Civilization I in real-time, demonstrating poor strategic planning and resource management. The agent makes suboptimal military decisions, resulting in rapid defeat against Napoleon's forces.
+            </p>
+          </div>
 
 
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">Citation / BibTeX</h2>
-    <pre><code>@misc{zhang2025videogamebenchvisionlanguagemodelscomplete,
-  title={VideoGameBench: Can Vision-Language Models complete popular video games?}, 
-  author={Alex L. Zhang and Thomas L. Griffiths and Karthik R. Narasimhan and Ofir Press},
-  year={2025},
-  eprint={2505.18134},
-  archivePrefix={arXiv},
-  primaryClass={cs.AI},
-  url={https://arxiv.org/abs/2505.18134}, 
+          <div style="text-align: center; margin: 2rem 0;">
+            <video autoplay muted loop playsinline controls style="max-width: 50%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+              <source src="./static/videos/gemini-2-5_zelda.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="caption" style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+              <b>Example 3.</b> Gemini 2.5 Pro explores The Legend of Zelda: Link's Awakening, wandering aimlessly while searching for Link's sword. This demonstrates challenges in objective-oriented navigation and game state understanding.
+            </p>
+          </div>
+
+
+          <div style="text-align: center; margin: 2rem 0;">
+            <video autoplay muted loop playsinline controls style="max-width: 80%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+              <source src="./static/videos/claude-3-7-incredible-machine.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="caption" style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+              <b>Example 4.</b> Claude Sonnet 3.7 attempts The Incredible Machine, a puzzle game requiring precise object placement and physics understanding. The agent exhibits difficulties with accurate cursor control and spatial reasoning.
+            </p>
+          </div>
+
+
+          <div style="text-align: center; margin: 2rem 0;">
+            <video autoplay muted loop playsinline controls style="max-width: 50%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+              <source src="./static/videos/gpt-4o_pokemon_crystal.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="caption" style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+              <b>Example 5.</b> GPT-4o plays Pokémon Crystal, successfully selecting Cyndaquil as its starter Pokémon but subsequently losing track of the primary objective. This highlights issues with long-term memory and goal persistence in complex RPG environments.
+            </p>
+          </div>
+
+          <div style="text-align: center; margin: 2rem 0;">
+            <video autoplay muted loop playsinline controls style="max-width: 80%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+              <source src="./static/videos/doom.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="caption" style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+              <b>Example 6.</b> Our VG-Agent (using GPT-4o) plays Doom II (easiest difficulty) on VideoGameBench Lite, where the environment pauses while the agent thinks. The agent demonstrates basic combat abilities and navigation but struggles with complex strategic decisions.
+            </p>
+          </div>
+          
+          <div class="overview-text">
+            <p>
+              As demonstrated in these examples, current state-of-the-art VLMs exhibit varying degrees of competency across different game genres. While they can perform basic interactions such as movement, menu navigation, and simple combat, they consistently struggle with higher-order cognitive tasks including strategic planning, spatial reasoning, objective maintenance, and adaptive problem-solving. These limitations underscore the substantial gap between current AI capabilities and human-level performance in complex interactive environments.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="citation-box">
+        <h2 class="title is-3">Citation</h2>
+        <hr class="section-divider">
+        <p>If you use <span class="videogamebench">VideoGameBench</span> in your research, please cite our paper:</p>
+        <div class="citation-container">
+          <pre class="citation-text"><code>@article{zhang2024videogamebench,
+  title={VideoGameBench: Can Vision-Language Models Complete Popular Video Games?},
+  author={Zhang, Alex L. and Griffiths, Thomas L. and Narasimhan, Karthik R. and Press, Ofir},
+  journal={arXiv preprint arXiv:2505.18134},
+  year={2024}
 }</code></pre>
-  </div>
-</section>
-
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This website template is based on the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code of the Nerfies website</a>.
-          </p>
+          <button class="copy-button" onclick="copyCitation()">Copy</button>
         </div>
       </div>
     </div>
-  </div>
-</footer>
+  </section>
 
+  <script>
+    let currentMode = 'full';
+
+    function switchMode(mode) {
+      currentMode = mode;
+      
+      // Update tab states
+      document.querySelectorAll('.mode-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.target.classList.add('active');
+
+      // Show/hide tables
+      const liteTable = document.getElementById('lite-table');
+      const fullTable = document.getElementById('full-table');
+      const modeDescription = document.getElementById('mode-description');
+      
+      if (mode === 'lite') {
+        liteTable.style.display = '';
+        fullTable.style.display = 'none';
+        modeDescription.style.display = 'block';
+      } else {
+        liteTable.style.display = 'none';
+        fullTable.style.display = '';
+        modeDescription.style.display = 'none';
+      }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // No filters to update anymore
+    });
+
+    function copyCitation() {
+      const citationText = `@article{zhang2024videogamebench,
+  title={VideoGameBench: Can Vision-Language Models Complete Popular Video Games?},
+  author={Zhang, Alex L. and Griffiths, Thomas L. and Narasimhan, Karthik R. and Press, Ofir},
+  journal={arXiv preprint arXiv:2505.18134},
+  year={2024}
+}`;
+      
+      navigator.clipboard.writeText(citationText).then(function() {
+        const button = document.querySelector('.copy-button');
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 2000);
+      });
+    }
+  </script>
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
 </body>
-</html>
+</html> 
