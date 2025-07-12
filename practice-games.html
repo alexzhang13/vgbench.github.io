@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Practice Games - VideoGameBench">
+  <meta name="keywords" content="VideoGameBench, VG-Bench, Practice Games">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Practice Games - VideoGameBench</title>
+  
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/ico.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    @font-face {
+      font-family: 'HardPixel';
+      src: url('./hardpixel/Hardpixel.OTF') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+    body {
+      font-family: 'Google Sans', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .top-nav {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 1rem 0;
+      color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .nav-title {
+      font-family: 'HardPixel', 'Google Sans', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border: 2px solid white;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-back:hover {
+      background-color: white;
+      color: #667eea;
+      text-decoration: none;
+    }
+    
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+    
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .page-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+    
+    .page-subtitle {
+      font-size: 1.2rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .game-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border: 1px solid #e9ecef;
+    }
+    
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .game-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    
+    .game-icon.clicking {
+      color: #28a745;
+    }
+    
+    .game-icon.navigation {
+      color: #007bff;
+    }
+    
+    .game-icon.dragging {
+      color: #ffc107;
+    }
+    
+    .game-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    
+    .game-description {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    
+    .play-button {
+      display: block;
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .play-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      color: white;
+      text-decoration: none;
+    }
+    
+    .play-button:active {
+      transform: translateY(0);
+    }
+    
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 0 1rem;
+      }
+      
+      .nav-title {
+        font-size: 2rem;
+      }
+      
+      .main-content {
+        padding: 2rem 1rem;
+      }
+      
+      .page-title {
+        font-size: 2.5rem;
+      }
+      
+      .games-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-nav">
+    <div class="nav-container">
+      <h1 class="nav-title">VideoGameBench: Practice Games</h1>
+      <a href="index.html" class="nav-back">
+        <i class="fas fa-arrow-left"></i>
+        <span>Back to VideoGameBench Paper</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="page-header">
+      <h1 class="page-title">Practice Games</h1>
+      <p class="page-subtitle">
+        We explicitly decouple some basic "skills" required to solve the games in VideoGameBench.  
+        These games evaluate skills such as mouse movement and navigation, and surprisingly we
+        find that most frontier VLMs perform poorly on these games!
+      </p>
+    </div>
+
+    <div class="games-grid">
+      <div class="game-card">
+        <div class="game-icon clicking">
+          <i class="fas fa-crosshairs"></i>
+        </div>
+        <h2 class="game-title">Location Clicking Game</h2>
+        <p class="game-description">
+          This game is a simple task where an agent must click a green circle with radius 40px that randomly
+          generates inside a 640px by 400px region on the browser. Each time the agent clicks the circle,
+          it respawns in a new location.
+        </p>
+        <a href="calibration/clicking.html" class="play-button">
+          <i class="fas fa-play"></i>
+          Play Now
+        </a>
+      </div>
+
+      <div class="game-card">
+        <div class="game-icon navigation">
+          <i class="fas fa-route"></i>
+        </div>
+        <h2 class="game-title">Navigation Game</h2>
+        <p class="game-description">
+          We generate 10 pre-defined mazes where the agent must move a red square to the green square 
+          in a small maze-like environment using
+          the arrow keys. There are movable tiles (light gray) and immovable tiles (dark gray) that the agent
+          must navigate.
+        </p>
+        <a href="calibration/navigation.html" class="play-button">
+          <i class="fas fa-play"></i>
+          Play Now
+        </a>
+      </div>
+
+      <div class="game-card">
+        <div class="game-icon dragging">
+          <i class="fas fa-hand-rock"></i>
+        </div>
+        <h2 class="game-title">Dragging Game</h2>
+        <p class="game-description">
+          Many games in VideoGameBench such as The Incredible Machine and Age of Empires require or allow dragging the
+          mouse to play the game. For this game, we devised 10 simple challenges for an
+          agent to drag in a certain pattern.
+        </p>
+        <a href="calibration/dragging.html" class="play-button">
+          <i class="fas fa-play"></i>
+          Play Now
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html> 
